@@ -36,8 +36,8 @@ def find_top_values(list_input: List[List[str]]) -> Tuple[int, int]:
     return total, sum(totals_list[:4])
 
 
-def day_one(input_file):
-    with open(input_file, "r") as file:
+def day_one(input_file_path: str) -> int:
+    with open(input_file_path, "r") as file:
         input_data = file.read().splitlines()
 
     populated_list = populate_nested_list(input_data)

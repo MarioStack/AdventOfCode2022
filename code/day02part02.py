@@ -19,8 +19,20 @@ SCORE_MAP = {
     "Win": 6
 }
 
+WANTED_OUTCOME = {
+    "X": "Lose",
+    "Y": "Draw",
+    "Z": "Win"
+}
 
-def day_2_part_1(input_file_path: str) -> int:
+WIN_CONDITIONS = {
+    "Rock": "Paper",
+    "Paper": "Scissors",
+    "Scissors": "Rock"
+}
+
+
+def day_2_part_2(input_file_path: str) -> int:
     with open(input_file_path, "r") as file:
         input_lines = file.read().splitlines()
 
@@ -29,34 +41,14 @@ def day_2_part_1(input_file_path: str) -> int:
     for line in input_lines:
         enemy_hand, our_hand = line.split()
         enemy_hand = INPUT_MAP.get(enemy_hand)
-        our_hand = INPUT_MAP.get(our_hand)
+        wanted_outcome = WANTED_OUTCOME.get(our_hand)
 
-        if enemy_hand == our_hand:
-            total += SCORE_MAP.get("Draw") + SHAPE_MAP.get(our_hand)
-        elif (enemy_hand, our_hand) in [("Rock", "Paper"), ("Paper", "Scissors"), ("Scissors", "Rock")]:
-            total += SCORE_MAP.get("Win") + SHAPE_MAP.get(our_hand)
+        if wanted_outcome == "Draw":
+            total += SCORE_MAP.get(wanted_outcome) + SHAPE_MAP.get(enemy_hand)
+        elif wanted_outcome == "Win":
+            total += SCORE_MAP.get(wanted_outcome) + SHAPE_MAP.get(WIN_CONDITIONS.get(enemy_hand))
         else:
-            total += SCORE_MAP.get("Lose") + SHAPE_MAP.get(our_hand)
+            total += (SCORE_MAP.get(wanted_outcome) +
+                      SHAPE_MAP.get(list(WIN_CONDITIONS.keys())[list(WIN_CONDITIONS.values()).index(enemy_hand)]))
     return total
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
