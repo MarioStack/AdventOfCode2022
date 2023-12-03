@@ -1,6 +1,10 @@
-def populate_nested_list(string_input):
+from typing import List, Tuple
+
+
+def populate_nested_list(string_input: List[str]) -> List[List[str]]:
     nested_list = [[]]
     nested_list_location = 0
+
     for i in range(len(string_input)):
         if string_input[i] == "":
             nested_list_location += 1
@@ -8,10 +12,11 @@ def populate_nested_list(string_input):
             continue
         else:
             nested_list[nested_list_location].append(string_input[i])
+
     return nested_list
 
 
-def find_top_values(list_input):
+def find_top_values(list_input: List[List[str]]) -> Tuple[int, int]:
     temp = 0
     total = 0
     totals_list = []
@@ -19,22 +24,23 @@ def find_top_values(list_input):
     for i in list_input:
         for j in i:
             temp += int(j)
+
         if temp > total:
             total = temp
-        totals_list.append(temp)
+
+        totals_list.append(int(temp))
         temp = 0
 
     totals_list.reverse()
 
-    return total, sum(totals_list[0:3])
+    return total, sum(totals_list[:4])
 
 
 def day_one(input_file):
-    input_data = open(input_file, "r").read().splitlines()
+    with open(input_file, "r") as file:
+        input_data = file.read().splitlines()
+
     populated_list = populate_nested_list(input_data)
-    total = find_top_values(populated_list)
+    highest, top_three_sum = find_top_values(populated_list)
 
-    return total
-
-
-
+    return highest, top_three_sum
